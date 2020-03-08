@@ -3,8 +3,12 @@ Type: Package
 Title: Modelling Community Transitions Across Coral Reef Depth Gradients
 Version: 0.1.0
 Date: 2020-03-06
-Author: Dr Jack H. Laverick
-Maintainer: Dr Jack H. Laverick  <jacklaverick@ymail.com>
+Authors@R: person(given = "Jack H",
+           family = "Laverick",
+           role = c("aut", "cre"),
+           email = "jacklaverick@ymail.com",
+           comment = c(ORCID = "0000-0001-6469-1750"))
+Maintainer: Jack H Laverick <jacklaverick@ymail.com>
 Description: This package contains functions which predict the vertical distributions of coral reef communities. The package is based on the mechanistic model of (Laverick et al., 2020) which uses water clarity and community level light preferences. 
 License: What license is it under?
 Encoding: UTF-8
