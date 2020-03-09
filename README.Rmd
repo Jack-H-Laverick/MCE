@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of MCE is to ...
+MCE is an R package for modelling the vertical distribution of coral communities across depth gradients. MCE currently contains a light driven
+mechanistic model of the transition from shallow to mesophotic reefs. The goal for the future is to allow the research community to include additional mechanisms. These models can provide useful null hypotheses, and help us to quantify the importance of missing ecosystem level processes.
 
 ## Installation
 
@@ -36,25 +37,48 @@ devtools::install_github("Jack-H-Laverick/MCE")
 ```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+MCE is largely split into functions which control the environment with depth, and functions which control community relationships to the environment. The following code shows how to build a light gradient with depth:
 
-```{r example}
+```{r environment}
 library(MCE)
 ## basic example code
+
+light.intervals <- seq(0.1, 1, length.out = 10) # Choose light levels to calculate depths for
+
+depths <- depth(light.intervals, KdPAR = 0.03)  # Calculate depths specifying light attenuation
+
+plot(x = depths, y = light.intervals)           # Quick plot
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+We can then specify how a coral community will respond to an environmental gradient:
 
-```{r cars}
-summary(cars)
+```{r community}
+
+light.intervals <- seq(0.1, 100, length.out = 10) # Choose light levels to calculate community values for
+
+community <- shallow(light.intervals)             # Calculate community values
+
+plot(y = community, x = light.intervals)          # Quick plot
+
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+Combining the environment and community functions allows you to project a depth distribution:
 
-You can also embed plots, for example:
+```{r distribution}
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+library(tidyverse)
+
+data.frame(light.intervals = seq(0.1, 1, length.out = 10)) %>%  # Choose light levels to calculate depths for
+ mutate(depths = depth(light.intervals, KdPAR = 0.03),  # Calculate depths specifying light attenuation
+        community = shallow(light.intervals * 100)) -> depth.distribution
+
+ggplot(depth.distribution) +
+  geom_area(aes(y = community, x = depths), fill = "skyblue", colour = "black") + 
+  theme_minimal() +
+  labs(x = "Depth (m)", y = "Shallow community value",
+       caption = "Example depth distribution for a shallow coral reef community")
+  
+
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
