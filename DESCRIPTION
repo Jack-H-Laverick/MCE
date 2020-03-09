@@ -10,8 +10,9 @@ Authors@R: person(given = "Jack H",
            comment = c(ORCID = "0000-0001-8829-2084"))
 Maintainer: Jack H Laverick <jacklaverick@ymail.com>
 Description: This package contains functions which predict the vertical distributions of coral reef communities. The package is based on the mechanistic model of (Laverick et al., 2020) which uses water clarity and community level light preferences. 
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://jack-h-laverick.github.io/MCE/, https://github.com/Jack-H-Laverick/MCE
+BugReports: https://github.com/Jack-H-Laverick/MCE/issues
 RoxygenNote: 7.0.2
