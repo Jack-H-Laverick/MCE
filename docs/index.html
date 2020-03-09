@@ -73,9 +73,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="mce-" class="section level1">
+<div id="the-mce-package-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#mce-" class="anchor"></a>MCE <a href="https:/jack-h-laverick.github.io/MCE"><img src="reference/figures/logo.png" align="right" height="139"></a>
+<a href="#the-mce-package-" class="anchor"></a>The MCE package <a href="https:/jack-h-laverick.github.io/MCE"><img src="reference/figures/logo.png" align="right" height="139"></a>
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
@@ -95,33 +95,34 @@
 <p>MCE is largely split into functions which control the environment with depth, and functions which control community relationships to the environment. The following code shows how to build a light gradient with depth:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(MCE)</a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">light.intervals &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">10</span>) <span class="co"># Choose light levels to calculate depths for</span></a>
+<a class="sourceLine" id="cb3-3" title="3">light.intervals &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.01</span>, <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">10</span>) <span class="co"># Choose light levels to calculate depths for</span></a>
 <a class="sourceLine" id="cb3-4" title="4"></a>
 <a class="sourceLine" id="cb3-5" title="5">depths &lt;-<span class="st"> </span><span class="kw"><a href="reference/depth.html">depth</a></span>(light.intervals, <span class="dt">KdPAR =</span> <span class="fl">0.03</span>)  <span class="co"># Calculate depths specifying light attenuation</span></a>
 <a class="sourceLine" id="cb3-6" title="6"></a>
 <a class="sourceLine" id="cb3-7" title="7"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> depths, <span class="dt">y =</span> light.intervals)           <span class="co"># Quick plot</span></a></code></pre></div>
-<p><img src="reference/figures/README-environment-1.png" width="100%"></p>
+<p><img src="reference/figures/README-environment-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p>We can then specify how a coral community will respond to an environmental gradient:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">light.intervals &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.1</span>, <span class="dv">100</span>, <span class="dt">length.out =</span> <span class="dv">10</span>) <span class="co"># Choose light levels to calculate community values for</span></a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">light.intervals &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.01</span>, <span class="dv">100</span>, <span class="dt">length.out =</span> <span class="dv">10</span>) <span class="co"># Choose light levels to calculate community values for</span></a>
 <a class="sourceLine" id="cb4-2" title="2"></a>
 <a class="sourceLine" id="cb4-3" title="3">community &lt;-<span class="st"> </span><span class="kw"><a href="reference/shallow.html">shallow</a></span>(light.intervals)             <span class="co"># Calculate community values</span></a>
 <a class="sourceLine" id="cb4-4" title="4"></a>
 <a class="sourceLine" id="cb4-5" title="5"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">y =</span> community, <span class="dt">x =</span> light.intervals)          <span class="co"># Quick plot</span></a></code></pre></div>
-<p><img src="reference/figures/README-community-1.png" width="100%"></p>
+<p><img src="reference/figures/README-community-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p>Combining the environment and community functions allows you to project a depth distribution:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr, <span class="dt">warn.conflicts =</span> F)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb5-3" title="3"></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">light.intervals =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">10</span>)) <span class="op">%&gt;%</span><span class="st">                </span><span class="co"># Choose light levels</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">depths =</span> <span class="kw"><a href="reference/depth.html">depth</a></span>(light.intervals, <span class="dt">KdPAR =</span> <span class="fl">0.03</span>),                     <span class="co"># Calculate depths</span></a>
-<a class="sourceLine" id="cb5-6" title="6">           <span class="dt">community =</span> <span class="kw"><a href="reference/shallow.html">shallow</a></span>(light.intervals <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)) -&gt;<span class="st"> </span>depth.distribution  <span class="co"># Calculate community values</span></a>
-<a class="sourceLine" id="cb5-7" title="7"></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="kw">ggplot</span>(depth.distribution) <span class="op">+</span><span class="st">                                                  </span><span class="co"># Plot</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">y =</span> community, <span class="dt">x =</span> depths), <span class="dt">fill =</span> <span class="st">"skyblue"</span>, <span class="dt">colour =</span> <span class="st">"black"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"Depth (m)"</span>, <span class="dt">y =</span> <span class="st">"Shallow community value"</span>,</a>
-<a class="sourceLine" id="cb5-12" title="12">       <span class="dt">caption =</span> <span class="st">"Example depth distribution for a shallow coral reef community"</span>)</a></code></pre></div>
-<p><img src="reference/figures/README-distribution-1.png" width="100%"></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr, <span class="dt">warn.conflicts =</span> F)</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">light.intervals =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.01</span>, <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">10</span>)) <span class="op">%&gt;%</span><span class="st">                </span><span class="co"># Choose light levels</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">depths =</span> <span class="kw"><a href="reference/depth.html">depth</a></span>(light.intervals, <span class="dt">KdPAR =</span> <span class="fl">0.03</span>),                     <span class="co"># Calculate depths</span></a>
+<a class="sourceLine" id="cb5-7" title="7">           <span class="dt">community =</span> <span class="kw"><a href="reference/shallow.html">shallow</a></span>(light.intervals <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)) -&gt;<span class="st"> </span>depth.distribution  <span class="co"># Calculate community values</span></a>
+<a class="sourceLine" id="cb5-8" title="8"></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="kw">ggplot</span>(depth.distribution) <span class="op">+</span><span class="st">                                                  </span><span class="co"># Plot</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">y =</span> community, <span class="dt">x =</span> depths), <span class="dt">fill =</span> <span class="st">"skyblue"</span>, <span class="dt">colour =</span> <span class="st">"black"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"Depth (m)"</span>, <span class="dt">y =</span> <span class="st">"Shallow community value"</span>,</a>
+<a class="sourceLine" id="cb5-13" title="13">       <span class="dt">caption =</span> <span class="st">"Example depth distribution for a shallow coral reef community"</span>)</a></code></pre></div>
+<p><img src="reference/figures/README-distribution-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>
