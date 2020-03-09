@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# MCE <a href='https:/jack-h-laverick.github.io/MCE'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# The MCE package <a href='https:/jack-h-laverick.github.io/MCE'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -39,11 +39,10 @@ devtools::install_github("Jack-H-Laverick/MCE")
 
 MCE is largely split into functions which control the environment with depth, and functions which control community relationships to the environment. The following code shows how to build a light gradient with depth:
 
-```{r environment}
+```{r environment, fig.asp = .75, out.width = "80%", fig.align = "center"}
 library(MCE)
-## basic example code
 
-light.intervals <- seq(0.1, 1, length.out = 10) # Choose light levels to calculate depths for
+light.intervals <- seq(0.01, 1, length.out = 10) # Choose light levels to calculate depths for
 
 depths <- depth(light.intervals, KdPAR = 0.03)  # Calculate depths specifying light attenuation
 
@@ -53,9 +52,8 @@ plot(x = depths, y = light.intervals)           # Quick plot
 
 We can then specify how a coral community will respond to an environmental gradient:
 
-```{r community}
-
-light.intervals <- seq(0.1, 100, length.out = 10) # Choose light levels to calculate community values for
+```{r community, fig.asp = .75, out.width = "80%", fig.align = "center"}
+light.intervals <- seq(0.01, 100, length.out = 10) # Choose light levels to calculate community values for
 
 community <- shallow(light.intervals)             # Calculate community values
 
@@ -65,15 +63,16 @@ plot(y = community, x = light.intervals)          # Quick plot
 
 Combining the environment and community functions allows you to project a depth distribution:
 
-```{r distribution}
+```{r distribution, fig.asp = .5, out.width = "80%", fig.align = "center"}
 
-library(tidyverse)
+library(dplyr, warn.conflicts = F)
+library(ggplot2)
 
-data.frame(light.intervals = seq(0.1, 1, length.out = 10)) %>%  # Choose light levels to calculate depths for
- mutate(depths = depth(light.intervals, KdPAR = 0.03),  # Calculate depths specifying light attenuation
-        community = shallow(light.intervals * 100)) -> depth.distribution
+data.frame(light.intervals = seq(0.01, 1, length.out = 10)) %>%                # Choose light levels
+    mutate(depths = depth(light.intervals, KdPAR = 0.03),                     # Calculate depths
+           community = shallow(light.intervals * 100)) -> depth.distribution  # Calculate community values
 
-ggplot(depth.distribution) +
+ggplot(depth.distribution) +                                                  # Plot
   geom_area(aes(y = community, x = depths), fill = "skyblue", colour = "black") + 
   theme_minimal() +
   labs(x = "Depth (m)", y = "Shallow community value",

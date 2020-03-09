@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# MCE <a href='https:/jack-h-laverick.github.io/MCE'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# The MCE package <a href='https:/jack-h-laverick.github.io/MCE'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -41,36 +41,37 @@ depth:
 ``` r
 library(MCE)
 
-light.intervals <- seq(0.1, 1, length.out = 10) # Choose light levels to calculate depths for
+light.intervals <- seq(0.01, 1, length.out = 10) # Choose light levels to calculate depths for
 
 depths <- depth(light.intervals, KdPAR = 0.03)  # Calculate depths specifying light attenuation
 
 plot(x = depths, y = light.intervals)           # Quick plot
 ```
 
-<img src="man/figures/README-environment-1.png" width="100%" />
+<img src="man/figures/README-environment-1.png" width="80%" style="display: block; margin: auto;" />
 
 We can then specify how a coral community will respond to an
 environmental gradient:
 
 ``` r
-light.intervals <- seq(0.1, 100, length.out = 10) # Choose light levels to calculate community values for
+light.intervals <- seq(0.01, 100, length.out = 10) # Choose light levels to calculate community values for
 
 community <- shallow(light.intervals)             # Calculate community values
 
 plot(y = community, x = light.intervals)          # Quick plot
 ```
 
-<img src="man/figures/README-community-1.png" width="100%" />
+<img src="man/figures/README-community-1.png" width="80%" style="display: block; margin: auto;" />
 
 Combining the environment and community functions allows you to project
 a depth distribution:
 
 ``` r
+
 library(dplyr, warn.conflicts = F)
 library(ggplot2)
 
-data.frame(light.intervals = seq(0.1, 1, length.out = 10)) %>%                # Choose light levels
+data.frame(light.intervals = seq(0.01, 1, length.out = 10)) %>%                # Choose light levels
     mutate(depths = depth(light.intervals, KdPAR = 0.03),                     # Calculate depths
            community = shallow(light.intervals * 100)) -> depth.distribution  # Calculate community values
 
@@ -81,4 +82,4 @@ ggplot(depth.distribution) +                                                  # 
        caption = "Example depth distribution for a shallow coral reef community")
 ```
 
-<img src="man/figures/README-distribution-1.png" width="100%" />
+<img src="man/figures/README-distribution-1.png" width="80%" style="display: block; margin: auto;" />
