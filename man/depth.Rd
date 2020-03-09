@@ -29,7 +29,7 @@ environment occurs at.
 
 A shading parameter can be used to scale how much of the light which reaches the seafloor is available to the benthos.
 According to (Lesser et al., 2018) the shading effect of reef slope at a vertical wall is to limit surface irradiance to
-25 percent (shade = 0.25). The default behaviour is for there to be no shading (Shade = 1).  When shading is more severe, the
+25\% (shade = 0.25). The default behaviour is for there to be no shading (Shade = 1).  When shading is more severe, the
 function will return a shallower depth. This is as the function is predicting the depth you would find your specified light
 level in the shaded environment.
 
@@ -67,3 +67,4 @@ Lesser
 
 Laverick
 }
+\concept{Environment functions}

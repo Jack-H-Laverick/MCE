@@ -3,3 +3,18 @@ url: https://jack-h-laverick.github.io/MCE/
 template:
   params:
     bootswatch: flatly
+reference:
+- title: Environment
+  desc: Control the modelled environment
+  contents:
+  - depth
+- title: Community relationships
+  desc: Define community responses to the environment
+  contents:
+  - shallow
+  - mesophotic
+- title: Zonation
+  desc: Predict reef zones
+  contents:
+  - reef
+  - boundary

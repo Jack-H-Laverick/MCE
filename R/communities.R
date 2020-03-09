@@ -6,7 +6,7 @@
 #'values (how similar a reef patch is to the idealised shallow community) increase asymptotically with increasing light.
 #'
 #'This relationship has been verified in the Red Sea (Tamir et al., 2019), but certainly needs more research!
-#'@param light The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100.
+#'@param light The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100\%.
 #'@param Vm The maximum similarity of a reef patch to the idealised shallow reef community, between 0 and 1.
 #'Defaults to (Tamir et al., 2019).
 #'@param K The light value where the community value = Vmax/2, between 0 and 100. Defaults to (Tamir et al., 2019).
@@ -39,7 +39,7 @@
 #'    shallow(Vm = 0.2, K = 11)
 #'
 #'
-#'@seealso \code{\link{mesophotic}}
+#'@family Community relationships
 #'@references (Tamir et al., 2019)
 #'
 #'(Laverick et al., 2017)
@@ -56,7 +56,7 @@ shallow <- function (light = seq(0.0065, 100, length = 500), Vm = 0.393, K = 13.
 #'community) center on a preferred light value, between light limitation and light-induced stress.
 #'
 #'This relationship has been verified in the Red Sea (Tamir et al., 2019), but certainly needs more research!
-#'@param light The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100.
+#'@param light The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100\%.
 #'@param a The scale parameter of a Weibull distribution, defaults to (Tamir et al., 2019).
 #' a describes the spread of the data, or ‘the peakyness’. Larger numbers create a flatter, wider, curve.
 #' Varying a will simultaneously change the width of the preferred light environment of mesophotic taxa,
@@ -93,7 +93,7 @@ shallow <- function (light = seq(0.0065, 100, length = 500), Vm = 0.393, K = 13.
 #'    mesophotic(a = 1.2, b = 8)
 #'
 #'
-#'@seealso \code{\link{shallow}}
+#'@family Community relationships
 #'@references (Tamir et al., 2019)
 #'
 #'(Laverick et al., 2017)

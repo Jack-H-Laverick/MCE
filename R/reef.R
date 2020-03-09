@@ -24,6 +24,7 @@
 #'Varying b shifts the preferred light environment of mesophotic communities.
 #'@return A reef wide community indicator value. This is the basis of the model presented in (Laverick et al., 2020).
 #'When a single light value is provided, a single value is returned. You can pass a vector of light levels for a vector of depths.
+#'@family Zonation functions
 #'@examples
 #'# Specifying a single light value
 #'# returns a single community value.
@@ -53,8 +54,6 @@
 #'@seealso \code{\link{shallow}}
 #'
 #'\code{\link{mesophotic}}
-#'
-#'\code{\link{boundary}}
 #'@references (Tamir et al., 2019)
 #'
 #'(Laverick et al., 2020)
@@ -72,7 +71,7 @@ reef <- function(light = seq(0.0065, 1, length = 500), Vm = 0.393, K = 13.5, a =
 #'either a shallow or mesophotic community.
 #'
 #'Strictly, this function finds the mathematical root of \code{\link{reef}}, searching between light levels of 0.01
-#'and 100 percent of surface Photosynthetically Active Radiation (PAR).
+#'and 100\% of surface Photosynthetically Active Radiation (PAR).
 #'
 #'\code{\link{depth}} can then be used to convert the boundary light level to boundry depths under different
 #'environmental conditions.
@@ -90,6 +89,7 @@ reef <- function(light = seq(0.0065, 1, length = 500), Vm = 0.393, K = 13.5, a =
 #'This means mesophotic taxa can be light-limited, while keeping mesophotic communities in low-light environments.
 #'Varying b shifts the preferred light environment of mesophotic communities.
 #'@return The light value when the shallow and mesophotic community values are equal.
+#'@family Zonation functions
 #'@examples
 #'# By default the function uses the shallow and mesophotic
 #'# community light relationships from (Tamir et al., 2019).
@@ -103,9 +103,7 @@ reef <- function(light = seq(0.0065, 1, length = 500), Vm = 0.393, K = 13.5, a =
 #'    boundary(Vm = 0.2, K = 11, a = 1.2, b = 8)
 #'
 #'
-#'@seealso \code{\link{reef}}
-#'
-#'\code{\link{depth}}
+#'@seealso \code{\link{depth}}
 #'@references (Tamir et al., 2019)
 #'
 #'(Laverick et al., 2020)

@@ -7,7 +7,7 @@
 shallow(light = seq(0.0065, 100, length = 500), Vm = 0.393, K = 13.5)
 }
 \arguments{
-\item{light}{The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100.}
+\item{light}{The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100\%.}
 
 \item{Vm}{The maximum similarity of a reef patch to the idealised shallow reef community, between 0 and 1.
 Defaults to (Tamir et al., 2019).}
@@ -62,5 +62,7 @@ This relationship has been verified in the Red Sea (Tamir et al., 2019), but cer
 (Laverick et al., 2017)
 }
 \seealso{
-\code{\link{mesophotic}}
+Other Community relationships: 
+\code{\link{mesophotic}()}
 }
+\concept{Community relationships}

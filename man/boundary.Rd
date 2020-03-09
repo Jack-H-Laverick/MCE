@@ -36,7 +36,7 @@ reef looks equally similar to a shallow or mesophotic reef. Changing the light l
 either a shallow or mesophotic community.
 
 Strictly, this function finds the mathematical root of \code{\link{reef}}, searching between light levels of 0.01
-and 100 percent of surface Photosynthetically Active Radiation (PAR).
+and 100\% of surface Photosynthetically Active Radiation (PAR).
 
 \code{\link{depth}} can then be used to convert the boundary light level to boundry depths under different
 environmental conditions.
@@ -61,7 +61,9 @@ environmental conditions.
 (Laverick et al., 2020)
 }
 \seealso{
-\code{\link{reef}}
-
 \code{\link{depth}}
+
+Other Zonation functions: 
+\code{\link{reef}()}
 }
+\concept{Zonation functions}

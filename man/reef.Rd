@@ -85,5 +85,7 @@ Essentially this function is a wrapper for mesophotic() - shallow(), but it is n
 
 \code{\link{mesophotic}}
 
-\code{\link{boundary}}
+Other Zonation functions: 
+\code{\link{boundary}()}
 }
+\concept{Zonation functions}

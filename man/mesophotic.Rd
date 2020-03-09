@@ -7,7 +7,7 @@
 mesophotic(light = seq(0.0065, 100, length = 500), a = 1.54, b = 8.92)
 }
 \arguments{
-\item{light}{The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100.}
+\item{light}{The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100\%.}
 
 \item{a}{The scale parameter of a Weibull distribution, defaults to (Tamir et al., 2019).
 a describes the spread of the data, or ‘the peakyness’. Larger numbers create a flatter, wider, curve.
@@ -66,5 +66,7 @@ This relationship has been verified in the Red Sea (Tamir et al., 2019), but cer
 (Laverick et al., 2017)
 }
 \seealso{
-\code{\link{shallow}}
+Other Community relationships: 
+\code{\link{shallow}()}
 }
+\concept{Community relationships}
