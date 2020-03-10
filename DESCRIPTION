@@ -16,3 +16,7 @@ LazyData: true
 URL: https://jack-h-laverick.github.io/MCE/, https://github.com/Jack-H-Laverick/MCE
 BugReports: https://github.com/Jack-H-Laverick/MCE/issues
 RoxygenNote: 7.0.2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

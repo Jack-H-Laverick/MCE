@@ -1,0 +1,56 @@
+---
+title: "Getting_started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting_started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r data}
+library(MCE)
+library(dplyr)
+
+data.frame(light.intervals = seq(0.0065, 1, length = 500)) %>%      # Choose light levels
+  mutate(lower = depth(light.intervals),                            # Calculate depths
+         upper = depth(light.intervals, shade = 0.25),              # Calculate depths
+         shallow = shallow(light.intervals * 100),
+         deep = mesophotic(light.intervals * 100),
+         whole = reef(light.intervals)) -> depth.distribution       # Calculate community values
+
+boundaries <- data.frame(boundary = c("lower", "upper"),
+                         depth = c(depth(MCE::boundary()), depth(MCE::boundary(), shade = 0.25)))
+```
+
+```{r plot}
+library(ggplot2)
+
+ggplot(depth.distribution, aes(y= lower, x= whole)) + 
+  annotate("rect", xmin=-1,xmax=0, ymin=-Inf,
+           ymax=Inf, fill="steelblue2", alpha=0.75)+                # Box from -1 to 0
+  annotate("rect", xmin=0, xmax=1, ymin=-Inf,
+           ymax=Inf, fill="tan2", alpha=0.75)+                      # Box from 0 to 1
+  geom_ribbon(data = depth.distribution, aes(ymin = upper, ymax = lower, x= whole), colour = 
+                'white', fill = 'White') +            # Add model range
+  geom_point(data = boundaries, aes(x = 0, y = depth)) +
+  labs(y = 'Depth (m)', x = 'Net D value') +  
+  scale_y_reverse() +
+  coord_cartesian(ylim = c(0,100), xlim = c(-0.65,0.65)) +
+  annotate("text", label="Shallow", y=93, x=-0.35, col="Black")+
+  annotate("text", label="observations", y=100, x=-0.35, col="Black")+
+  annotate("text", label="Mesophotic", y=93, x=0.35, col="Black")+
+  annotate("text", label="observations", y=100, x=0.35, col="Black")+
+  theme_minimal() +                        
+  theme(plot.title = element_text(size=12, hjust = 0.5),    
+        axis.title.x = element_text(size=10),  
+        axis.title.y = element_text(size=10), 
+        legend.position = 'bottom') +                              # label sizes and legend position
+  NULL
+```
