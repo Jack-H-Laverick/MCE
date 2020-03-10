@@ -3,11 +3,14 @@ home:
   links:
   - text: Ask a question about the package at
     href: jacklaverick@ymail.com
+
 destination: docs
 url: https://jack-h-laverick.github.io/MCE/
+
 template:
   params:
     bootswatch: flatly
+
 reference:
 - title: Environment
   desc: Control the modelled environment
@@ -23,3 +26,19 @@ reference:
   contents:
   - reef
   - boundary
+
+navbar:
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: 'Interactive web-app'
+        href: articles/Interactive.html
+      - text: '---'
+      - text: 'Examples'
+      - text: 'Build reef zones'
+        href: articles/Model.html
+      - text: 'Sensitivity analyses'
+        href: articles/Sensitivity_analyses.html
+      - text: 'Global heuristics'
+        href: articles/Heuristics.html

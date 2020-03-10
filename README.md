@@ -30,7 +30,7 @@ And the development version from [GitHub](https://github.com/) with:
 remotes::install_github("Jack-H-Laverick/MCE")
 ```
 
-## Example
+## Usage
 
 MCE is largely split into functions which control the environment with
 depth, and functions which control community relationships to the
@@ -42,9 +42,9 @@ library(MCE)
 
 light.intervals <- seq(0.01, 1, length.out = 10) # Choose light levels to calculate depths for
 
-depths <- depth(light.intervals, KdPAR = 0.03)  # Calculate depths specifying light attenuation
+depths <- depth(light.intervals, KdPAR = 0.03)   # Calculate depths specifying light attenuation
 
-plot(x = depths, y = light.intervals)           # Quick plot
+plot(x = depths, y = light.intervals)            # Quick plot
 ```
 
 <img src="man/figures/README-environment-1.png" width="80%" style="display: block; margin: auto;" />
