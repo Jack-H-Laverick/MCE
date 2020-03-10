@@ -27,8 +27,7 @@ install.packages("MCE")
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("Jack-H-Laverick/MCE")
+remotes::install_github("Jack-H-Laverick/MCE")
 ```
 
 ## Example
