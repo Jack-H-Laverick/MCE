@@ -13,13 +13,13 @@
     <loc>https://jack-h-laverick.github.io/MCE//reference/reef.html</loc>
   </url>
   <url>
-    <loc>https://jack-h-laverick.github.io/MCE//reference/boundary.html</loc>
-  </url>
-  <url>
     <loc>https://jack-h-laverick.github.io/MCE//reference/depth.html</loc>
   </url>
   <url>
     <loc>https://jack-h-laverick.github.io/MCE//reference/MCE-package.html</loc>
+  </url>
+  <url>
+    <loc>https://jack-h-laverick.github.io/MCE//reference/reef_boundary.html</loc>
   </url>
   <url>
     <loc>https://jack-h-laverick.github.io/MCE//articles/MCE.html</loc>
@@ -34,6 +34,6 @@
     <loc>https://jack-h-laverick.github.io/MCE//articles/Heuristics.html</loc>
   </url>
   <url>
-    <loc>https://jack-h-laverick.github.io/MCE//articles/Model.html</loc>
+    <loc>https://jack-h-laverick.github.io/MCE//articles/Contribute.html</loc>
   </url>
 </urlset>

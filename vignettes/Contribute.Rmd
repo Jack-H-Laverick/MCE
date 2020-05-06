@@ -1,0 +1,67 @@
+---
+title: "Conducting sensitivity analyses"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting_started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(MCE)
+library(tidyverse)
+library(gganimate)
+
+```
+
+```{r data}
+
+map(seq(0.05, 0.2, by = 0.01), function(x) {
+  data.frame(Light = seq(0.0065, 1, length = 500)) %>%         # Choose light levels
+    mutate("Bright depths" = depth(Light, KdPAR = x),                # Calculate depths
+           "Shaded depths" = depth(Light, KdPAR = x, shade = 0.25),  # Calculate depths
+           "Shallow community" = shallow(Light),
+           "Mesophotic community" = mesophotic(Light),
+           "Whole reef" = reef(Light),
+           "KdPAR" = x) }) %>%   # Calculate community values
+  bind_rows() -> Kdpar.sensitivity
+```
+
+
+```{r boundaries}
+boundaries <- data.frame(Boundary = c("lower", "upper"),
+                         Depth = c(depth(reef_boundary()), depth(reef_boundary(), shade = 0.25)))
+```
+
+
+```{r plot, echo=FALSE, fig.align = "center", eval = FALSE}
+
+ggplot(Kdpar.sensitivity, aes(y= `Bright depths`, x= `Whole reef`)) + 
+  annotate("rect", xmin=-1,xmax=0, ymin=-Inf,
+           ymax=Inf, fill="steelblue2", alpha=0.75)+                # Box from -1 to 0
+  annotate("rect", xmin=0, xmax=1, ymin=-Inf,
+           ymax=Inf, fill="tan2", alpha=0.75)+                      # Box from 0 to 1
+  geom_ribbon(data = Kdpar.sensitivity, aes(ymin = `Shaded depths`, ymax = `Bright depths`, x= `Whole reef`), colour = 
+                'white', fill = 'White', alpha = 0.45) +            # Add model range
+#  geom_point(data = boundaries, aes(x = 0, y = Depth)) +
+  labs(y = 'Depth (m)', x = 'Net D value') +  
+  coord_cartesian(ylim = c(100, 0), xlim = c(-0.65,0.65)) +
+  annotate("text", label="Shallow", y=93, x=-0.35, col="Black")+
+  annotate("text", label="observations", y=100, x=-0.35, col="Black")+
+  annotate("text", label="Mesophotic", y=93, x=0.35, col="Black")+
+  annotate("text", label="observations", y=100, x=0.35, col="Black")+
+  theme_minimal() +                        
+  theme(plot.title = element_text(size=12, hjust = 0),    
+        axis.title.x = element_text(size=10),  
+        axis.title.y = element_text(size=10), 
+        legend.position = 'bottom') +                               # label sizes and legend position
+  transition_states(KdPAR, state_length = 0, wrap = T, transition_length = 0.01) +
+  labs(subtitle = 'parameter value: {closest_state}',
+       title = expression(paste("Model sensitivity to changes in", K[dPAR]))) +
+  NULL
+```

@@ -4,7 +4,7 @@
 \alias{depth}
 \title{Calculate the depth of a light level}
 \usage{
-depth(light = seq(0.0065, 1, length = 500), KdPAR = 0.05, shade = 1)
+depth(light = seq(0.01, 1, length = 500), KdPAR = 0.05, shade = 1)
 }
 \arguments{
 \item{light}{The proportion of surface irradiance (PAR), between 0 and 1. Defaults to a vector of light values.}

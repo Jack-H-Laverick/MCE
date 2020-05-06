@@ -58,8 +58,8 @@
 #'
 #'(Laverick et al., 2020)
 #'@export
-reef <- function(light = seq(0.0065, 1, length = 500), Vm = 0.393, K = 13.5, a = 1.54, b = 8.92) {
-  reef <- mesophotic(light*100, a = a, b = b) - (shallow(light*100, Vm = Vm, K = K))
+reef <- function(light = seq(0.001, 1, length = 500), Vm = 0.393, K = 13.5, a = 1.54, b = 8.92) {
+  reef <- mesophotic(light, a = a, b = b) - (shallow(light, Vm = Vm, K = K))
   return(reef)
   #1 - 0.25 (No shading, to shading from a vertical wall (Lesser et al., 2018))
 }
@@ -108,7 +108,7 @@ reef <- function(light = seq(0.0065, 1, length = 500), Vm = 0.393, K = 13.5, a =
 #'
 #'(Laverick et al., 2020)
 #'@export
-boundary <- function(Vm = 0.393, K = 13.5, a = 1.54, b = 8.92) {
-  root <- uniroot(reef, Vm=Vm, K=K, a=a, b=b, interval= c(0.01, 100), tol= 0.000001)$root
+reef_boundary <- function(Vm = 0.393, K = 13.5, a = 1.54, b = 8.92) {
+  root <- uniroot(reef, Vm=Vm, K=K, a=a, b=b, interval= c(0.0001, 100), tol= 0.000001)$root
   return(root)
 }

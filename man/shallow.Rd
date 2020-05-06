@@ -4,7 +4,7 @@
 \alias{shallow}
 \title{Calculate the shallow community value for a given light level}
 \usage{
-shallow(light = seq(0.0065, 100, length = 500), Vm = 0.393, K = 13.5)
+shallow(light = seq(0.01, 100, length = 500), Vm = 0.393, K = 13.5)
 }
 \arguments{
 \item{light}{The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100\%.}

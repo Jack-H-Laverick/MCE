@@ -17,14 +17,8 @@ level processes.
 
 ## Installation
 
-You can install the released version of MCE from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("MCE")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the latest version of MCE from
+[GitHub](https://github.com/) with:
 
 ``` r
 remotes::install_github("Jack-H-Laverick/MCE")
@@ -32,53 +26,21 @@ remotes::install_github("Jack-H-Laverick/MCE")
 
 ## Usage
 
-MCE is largely split into functions which control the environment with
-depth, and functions which control community relationships to the
-environment. The following code shows how to build a light gradient with
-depth:
+The functions in MCE are broadly split into environmental functions, and
+community preferences. By combining the spatial gradient of an
+environmental factor with a relationship between the factor and coral
+communities, we can predict community zonation for a reef.
 
-``` r
-library(MCE)
+<img src="man/figures/README-plot-1.png" width="100%" style="display: block; margin: auto;" />
 
-light.intervals <- seq(0.01, 1, length.out = 10) # Choose light levels to calculate depths for
+## Future Expansion
 
-depths <- depth(light.intervals, KdPAR = 0.03)   # Calculate depths specifying light attenuation
+The first version of MCE contains a simple light-relationship, including
+changes in water clarity and bathymetric shading. There are other
+enviornmental gradients and processes which could affect the vertical
+zonation of coral reef communities.
 
-plot(x = depths, y = light.intervals)            # Quick plot
-```
-
-<img src="man/figures/README-environment-1.png" width="80%" style="display: block; margin: auto;" />
-
-We can then specify how a coral community will respond to an
-environmental gradient:
-
-``` r
-light.intervals <- seq(0.01, 100, length.out = 10) # Choose light levels to calculate community values for
-
-community <- shallow(light.intervals)             # Calculate community values
-
-plot(y = community, x = light.intervals)          # Quick plot
-```
-
-<img src="man/figures/README-community-1.png" width="80%" style="display: block; margin: auto;" />
-
-Combining the environment and community functions allows you to project
-a depth distribution:
-
-``` r
-
-library(dplyr, warn.conflicts = F)
-library(ggplot2)
-
-data.frame(light.intervals = seq(0.01, 1, length.out = 10)) %>%                # Choose light levels
-    mutate(depths = depth(light.intervals, KdPAR = 0.03),                     # Calculate depths
-           community = shallow(light.intervals * 100)) -> depth.distribution  # Calculate community values
-
-ggplot(depth.distribution) +                                                  # Plot
-  geom_area(aes(y = community, x = depths), fill = "skyblue", colour = "black") + 
-  theme_minimal() +
-  labs(x = "Depth (m)", y = "Shallow community value",
-       caption = "Example depth distribution for a shallow coral reef community")
-```
-
-<img src="man/figures/README-distribution-1.png" width="80%" style="display: block; margin: auto;" />
+<br> To read more on future opportunities for expansion, go to
+“Contribute”. Get in touch if your pet process is missing from the
+list, or if you think you have data to help characterise a new
+relationship.

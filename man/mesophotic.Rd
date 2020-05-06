@@ -4,7 +4,7 @@
 \alias{mesophotic}
 \title{Calculate the mesophotic community value for a given light level}
 \usage{
-mesophotic(light = seq(0.0065, 100, length = 500), a = 1.54, b = 8.92)
+mesophotic(light = seq(0.01, 100, length = 500), a = 1.54, b = 8.92)
 }
 \arguments{
 \item{light}{The percentage of surface irradiance (PAR) reaching a reef, positive and up to 100\%.}

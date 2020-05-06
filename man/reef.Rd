@@ -5,7 +5,7 @@
 \title{Calculate the whole-reef community value for a given light level}
 \usage{
 reef(
-  light = seq(0.0065, 1, length = 500),
+  light = seq(0.01, 1, length = 500),
   Vm = 0.393,
   K = 13.5,
   a = 1.54,
@@ -86,6 +86,6 @@ Essentially this function is a wrapper for mesophotic() - shallow(), but it is n
 \code{\link{mesophotic}}
 
 Other Zonation functions: 
-\code{\link{boundary}()}
+\code{\link{reef_boundary}()}
 }
 \concept{Zonation functions}

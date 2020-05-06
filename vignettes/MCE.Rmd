@@ -13,29 +13,47 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(MCE)
-library(dplyr)
 
 ```
 
-```{r data}
+```{r data, message=FALSE, warning=FALSE}
 
-data.frame(Light = seq(0.0065, 1, length = 500)) %>%         # Choose light levels
-  mutate("Bright depths" = depth(Light),                     # Calculate depths
-         "Shaded depths" = depth(Light, shade = 0.25),       # Calculate depths
-         "Shallow community" = shallow(Light * 100),
-         "Mesophotic community" = mesophotic(Light * 100),
-         "Whole reef" = reef(Light)) -> depth.distribution   # Calculate community values
+library(MCE)                                               # Load the package
+library(dplyr)                                             # Load some data manipulation tools
+
+data.frame(Light = seq(0.001, 1, length = 500)) %>%        # Choose light levels
+  mutate("Bright depths" = depth(Light),                   # Calculate depths
+         "Shaded depths" = depth(Light, shade = 0.25),     # Calculate depths with shading
+         "Shallow community" = shallow(Light),             # Shallow community at these light levels
+         "Mesophotic community" = mesophotic(Light),       # Mesophotic community at these light levels
+         "Whole reef" = reef(Light)) -> depth.distribution # Calculate reef-wide community values
+
 ```
+
+
+As the default light levels are shared across all the functions, specifying a set of light levels isn't really neccessary. You would get the same result not specifying `Light` anywhere in the above code. I think including it helps to show how things are working, and makes the code more readable. 
+
+
+The following table show's the values we simulated.
+
 
 ```{r, echo = F}
 knitr::kable(depth.distribution[1:5,], format="html") %>% 
   kableExtra::kable_styling(bootstrap_options = "striped", full_width = T)
 ```
 
+
+We don't actually need to go to the effort of simulating a reef to get the boundary depths between the shallow, upper mesophotic, and lower mesophotic zones. `MCE` comes with a built in `reef_boundary` function which returns the **light level** where a patch of reef would look just as much shallow as it does mesophotic.
+
+
+If we pass this light level to the `depth` function, we can then get the shallowest and deepest depths where the two communities overlap. This is the same as identifying the upper and lower limits of the upper mesophotic zone.
+
+
 ```{r boundaries}
+
 boundaries <- data.frame(Boundary = c("lower", "upper"),
-                         Depth = c(depth(MCE::boundary()), depth(MCE::boundary(), shade = 0.25)))
+                         Depth = c(depth(reef_boundary()), depth(reef_boundary(), shade = 0.25)))
+
 ```
 
 ```{r, echo = F}
@@ -43,7 +61,7 @@ knitr::kable(boundaries, format="html") %>%
   kableExtra::kable_styling(bootstrap_options = "striped", full_width = T)
 ```
 
-```{r plot, echo=FALSE, fig.align = "center"}
+```{r plot, echo=FALSE, fig.align = "center", warning=FALSE, fig.height=1, dpi=800}
 library(ggplot2)
 
 ggplot(depth.distribution, aes(y= `Bright depths`, x= `Whole reef`)) + 
@@ -55,8 +73,7 @@ ggplot(depth.distribution, aes(y= `Bright depths`, x= `Whole reef`)) +
                 'white', fill = 'White', alpha = 0.45) +            # Add model range
   geom_point(data = boundaries, aes(x = 0, y = Depth)) +
   labs(y = 'Depth (m)', x = 'Net D value') +  
-  scale_y_reverse() +
-  coord_cartesian(ylim = c(0,100), xlim = c(-0.65,0.65)) +
+  coord_cartesian(ylim = c(100, 0), xlim = c(-0.65,0.65), ) +
   annotate("text", label="Shallow", y=93, x=-0.35, col="Black")+
   annotate("text", label="observations", y=100, x=-0.35, col="Black")+
   annotate("text", label="Mesophotic", y=93, x=0.35, col="Black")+

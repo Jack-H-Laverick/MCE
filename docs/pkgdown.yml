@@ -1,12 +1,13 @@
 pandoc: 2.7.2
-pkgdown: 1.4.1
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   MCE: MCE.html
   Interactive: Interactive.html
   Sensitivity_analyses: Sensitivity_analyses.html
   Heuristics: Heuristics.html
-  Model: Model.html
+  Contribute: Contribute.html
+last_built: 2020-05-06T17:47Z
 urls:
   reference: https://jack-h-laverick.github.io/MCE//reference
   article: https://jack-h-laverick.github.io/MCE//articles

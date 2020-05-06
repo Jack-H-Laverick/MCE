@@ -50,7 +50,7 @@
 #'
 #'Laverick
 #'@export
-depth <- function (light = seq(0.0065, 1, length = 500), KdPAR = 0.05, shade = 1) {
+depth <- function (light = seq(0.01, 1, length = 500), KdPAR = 0.05, shade = 1) {
   Depth <- log(light/shade)/-KdPAR
   return(Depth)
 }

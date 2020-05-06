@@ -44,8 +44,8 @@
 #'
 #'(Laverick et al., 2017)
 #'@export
-shallow <- function (light = seq(0.0065, 100, length = 500), Vm = 0.393, K = 13.5) {
-  Shallow <- Vm * light/(K+light)
+shallow <- function (light = seq(0.0001, 1, length = 500), Vm = 0.393, K = 13.5) {
+  Shallow <- Vm * (light*100)/(K+(light*100))
   return(Shallow)
 }
 
@@ -98,7 +98,7 @@ shallow <- function (light = seq(0.0065, 100, length = 500), Vm = 0.393, K = 13.
 #'
 #'(Laverick et al., 2017)
 #'@export
-mesophotic <- function (light = seq(0.0065, 100, length = 500), a = 1.54, b = 8.92) {
-  Mesophotic <- (a/b)*(light/b)^(a-1)*exp(-(light/b)^a)
+mesophotic <- function (light = seq(0.0001, 1, length = 500), a = 1.54, b = 8.92) {
+  Mesophotic <- (a/b)*((light*100)/b)^(a-1)*exp(-((light*100)/b)^a)
   return(Mesophotic)
 }

@@ -23,8 +23,8 @@ library(dplyr)
 data.frame(Light = seq(0.0065, 1, length = 500)) %>%         # Choose light levels
   mutate("Bright depths" = depth(Light),                # Calculate depths
          "Shaded depths" = depth(Light, shade = 0.25),  # Calculate depths
-         "Shallow community" = shallow(Light * 100),
-         "Mesophotic community" = mesophotic(Light * 100),
+         "Shallow community" = shallow(Light),
+         "Mesophotic community" = mesophotic(Light),
          "Whole reef" = reef(Light)) -> depth.distribution   # Calculate community values
 ```
 
@@ -35,7 +35,7 @@ knitr::kable(depth.distribution[1:5,], format="html") %>%
 
 ```{r boundaries}
 boundaries <- data.frame(Boundary = c("lower", "upper"),
-                         Depth = c(depth(MCE::boundary()), depth(MCE::boundary(), shade = 0.25)))
+                         Depth = c(depth(reef_boundary()), depth(reef_boundary(), shade = 0.25)))
 ```
 
 ```{r, echo = F}
@@ -54,9 +54,8 @@ ggplot(depth.distribution, aes(y= `Bright depths`, x= `Whole reef`)) +
   geom_ribbon(data = depth.distribution, aes(ymin = `Shaded depths`, ymax = `Bright depths`, x= `Whole reef`), colour = 
                 'white', fill = 'White', alpha = 0.45) +            # Add model range
   geom_point(data = boundaries, aes(x = 0, y = Depth)) +
-  labs(y = 'Depth (m)', x = 'Net D value') +  
   scale_y_reverse() +
-  coord_cartesian(ylim = c(0,100), xlim = c(-0.65,0.65)) +
+  coord_cartesian(ylim = c(100, 0), xlim = c(-0.65,0.65)) +
   annotate("text", label="Shallow", y=93, x=-0.35, col="Black")+
   annotate("text", label="observations", y=100, x=-0.35, col="Black")+
   annotate("text", label="Mesophotic", y=93, x=0.35, col="Black")+

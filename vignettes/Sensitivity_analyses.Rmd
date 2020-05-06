@@ -14,57 +14,80 @@ knitr::opts_chunk$set(
 )
 
 library(MCE)
-library(dplyr)
+library(tidyverse)
+library(gganimate)
 
 ```
+
+## Create reef zones under different conditions
 
 ```{r data}
 
-data.frame(Light = seq(0.0065, 1, length = 500)) %>%         # Choose light levels
-  mutate("Bright depths" = depth(Light),                # Calculate depths
-         "Shaded depths" = depth(Light, shade = 0.25),  # Calculate depths
-         "Shallow community" = shallow(Light * 100),
-         "Mesophotic community" = mesophotic(Light * 100),
-         "Whole reef" = reef(Light)) -> depth.distribution   # Calculate community values
+KdPARs <- seq(0.05, 0.2, by = 0.01) %>%                        # Choose variable and values to compare
+  map_df(function(x) {                                         # For each value
+      data.frame(Light = seq(0.001, 1, length = 500)) %>%      # Make a dataframe of light levels
+        mutate("Bright depths" = depth(Light, KdPAR = x),      # Add max depths given KdPAR
+               "Shaded depths" = depth(Light, KdPAR = x, shade = 0.25),  # Max depths when shaded
+               "Whole reef" = reef(Light),                     # Calculate default reef zonation
+               "KdPAR" = x) })                                 # Include KdPAR value
+
 ```
 
-```{r, echo = F}
-knitr::kable(depth.distribution[1:5,], format="html") %>% 
-  kableExtra::kable_styling(bootstrap_options = "striped", full_width = T)
-```
+## Visualise
 
-```{r boundaries}
-boundaries <- data.frame(Boundary = c("lower", "upper"),
-                         Depth = c(depth(MCE::boundary()), depth(MCE::boundary(), shade = 0.25)))
-```
+```{r plot, echo=FALSE, fig.align = "center", eval = TRUE, dpi= 800, out.width = "75%"}
 
-```{r, echo = F}
-knitr::kable(boundaries, format="html") %>% 
-  kableExtra::kable_styling(bootstrap_options = "striped", full_width = T)
-```
-
-```{r plot, echo=FALSE, fig.align = "center"}
-library(ggplot2)
-
-ggplot(depth.distribution, aes(y= `Bright depths`, x= `Whole reef`)) + 
+ggplot(KdPARs, aes(y= `Bright depths`, x= `Whole reef`)) + 
   annotate("rect", xmin=-1,xmax=0, ymin=-Inf,
            ymax=Inf, fill="steelblue2", alpha=0.75)+                # Box from -1 to 0
   annotate("rect", xmin=0, xmax=1, ymin=-Inf,
            ymax=Inf, fill="tan2", alpha=0.75)+                      # Box from 0 to 1
-  geom_ribbon(data = depth.distribution, aes(ymin = `Shaded depths`, ymax = `Bright depths`, x= `Whole reef`), colour = 
+  geom_ribbon(data = KdPARs, aes(ymin = `Shaded depths`, ymax = `Bright depths`, x= `Whole reef`), colour = 
                 'white', fill = 'White', alpha = 0.45) +            # Add model range
-  geom_point(data = boundaries, aes(x = 0, y = Depth)) +
   labs(y = 'Depth (m)', x = 'Net D value') +  
-  scale_y_reverse() +
-  coord_cartesian(ylim = c(0,100), xlim = c(-0.65,0.65)) +
+  coord_cartesian(ylim = c(100, 0), xlim = c(-0.65,0.65)) +
   annotate("text", label="Shallow", y=93, x=-0.35, col="Black")+
   annotate("text", label="observations", y=100, x=-0.35, col="Black")+
   annotate("text", label="Mesophotic", y=93, x=0.35, col="Black")+
   annotate("text", label="observations", y=100, x=0.35, col="Black")+
   theme_minimal() +                        
-  theme(plot.title = element_text(size=12, hjust = 0.5),    
+  theme(plot.title = element_text(size=12, hjust = 0),    
         axis.title.x = element_text(size=10),  
         axis.title.y = element_text(size=10), 
-        legend.position = 'bottom') +                              # label sizes and legend position
+        legend.position = 'bottom') +                               # label sizes and legend position
+  transition_states(KdPAR, state_length = 0, wrap = T, transition_length = 0.01) +
+  labs(caption = 'parameter value: {closest_state}',
+       title = expression(paste("Model sensitivity to changes in", K[dPAR]))) +
   NULL
+```
+
+## How about the boundary depths?
+
+
+```{r boundaries}
+
+KdPAR_boundaries <- seq(0.05, 0.2, by = 0.01) %>%              # Choose variable and values to compare
+  map_df(function(x) {                                         # For each value
+    data.frame("Upper_bound" = depth(reef_boundary(),          # Max depth for default reef boundary
+                                     KdPAR = x),                     # Given a KdPAR value
+               "Lower_bound" = depth(reef_boundary(), shade = 0.25,  # Shaded depth for default reef boundary
+                               KdPAR = x),                    # Given a KdPAR value
+                "KdPAR" = x)})                                    # Include changing variable
+
+```
+
+## Plot the effect on boundary depths
+
+
+```{r plot_boundary, echo=FALSE, fig.align = "center", eval = TRUE, dpi= 800, out.width = "75%"}
+
+ggplot() +
+  geom_ribbon(data = KdPAR_boundaries, aes(x = KdPAR, ymin = Lower_bound, ymax = Upper_bound)) +  
+  scale_y_reverse() +
+  labs(y = 'Depth (m)', x = expression("K"["dPAR"])) +  
+  theme_minimal() +                        
+  theme(plot.title = element_text(size=12, hjust = 0),    
+        axis.title.x = element_text(size=10),  
+        axis.title.y = element_text(size=10), 
+        legend.position = 'bottom')
 ```

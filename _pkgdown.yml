@@ -1,15 +1,11 @@
 home:
   title: Reef zones in R
   links:
-  - text: Ask a question about the package at
+  - text: Ask a question about the package
     href: jacklaverick@ymail.com
 
 destination: docs
 url: https://jack-h-laverick.github.io/MCE/
-
-template:
-  params:
-    bootswatch: flatly
 
 reference:
 - title: Environment
@@ -25,20 +21,38 @@ reference:
   desc: Predict reef zones
   contents:
   - reef
-  - boundary
+  - reef_boundary
 
 navbar:
-  components:
-    articles:
-      text: Articles
-      menu:
-      - text: 'Interactive web-app'
-        href: articles/Interactive.html
-      - text: '---'
-      - text: 'Examples'
-      - text: 'Build reef zones'
-        href: articles/Model.html
-      - text: 'Sensitivity analyses'
-        href: articles/Sensitivity_analyses.html
-      - text: 'Global heuristics'
-        href: articles/Heuristics.html
+  type: inverse
+  left:
+   - icon: fa-home
+     href: index.html
+   - icon: fa-sliders-h
+     text: "Web-app"
+     href: articles/Interactive.html
+   - href: articles/MCE.html
+     text: "Getting Started"
+   - text: "Articles"
+     menu:
+     - text: 'Examples'
+     - text: '---'
+     - text: 'Sensitivity analyses'
+       href: articles/Sensitivity_analyses.html
+     - text: 'Global heuristics'
+       href: articles/Heuristics.html
+  right:
+   - icon: fa-puzzle-piece
+     text: "contribute"
+     href: articles/Contribute.html
+   - icon: fa-newspaper-o
+     text: "news"
+     href: articles/MCE.html
+   - icon: fa-file-code-o
+     text: "functions"
+     href: reference/index.html
+   - icon: fa-github fa-lg
+     href: https://jack-h-laverick.github.io/MCE/
+
+
+
